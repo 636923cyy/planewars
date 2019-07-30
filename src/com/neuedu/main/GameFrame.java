@@ -3,17 +3,17 @@ package com.neuedu.main;
 import com.neuedu.constant.FrameConstant;
 import com.neuedu.runtime.Background;
 
-import java.awt.Frame;
-import java.awt.Graphics;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 public class GameFrame extends Frame {
 
+    private Background background = new Background();
+
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
+        background.draw(g);
     }
 
     /**
@@ -34,19 +34,38 @@ public class GameFrame extends Frame {
             }
         });
 
-        setVisible(true);
 
         new Thread(){
             @Override
             public void run() {
-                repaint();
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                while(true){
+                    repaint();
+                    try {
+                        Thread.sleep(20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
+
         }.start();
 
+        setVisible(true);
+
     }
+
+    //创建缓冲区
+    private Image offScreenImage = null;
+
+    @Override
+    public void update(Graphics g){
+        if (offScreenImage ==  null){
+            offScreenImage = this.createImage(FrameConstant.FRAME_WIDTH,FrameConstant.FRAME_HEIGHT);
+        }
+        Graphics goff = offScreenImage.getGraphics();//创建离线图片的实例，在图片缓冲区绘图
+        paint(goff);
+        g.drawImage(offScreenImage,0,0,null);//将缓冲图片绘制到窗口目标
+    }
+
 }
