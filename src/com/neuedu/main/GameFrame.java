@@ -2,6 +2,7 @@ package com.neuedu.main;
 
 import com.neuedu.constant.FrameConstant;
 import com.neuedu.runtime.*;
+import com.neuedu.util.DataStore;
 import com.neuedu.util.ImageMap;
 
 import java.awt.*;
@@ -30,12 +31,18 @@ public class GameFrame extends Frame {
     //创建敌方飞机集合
     public final List<EnemyPlane> enemyPlaneList = new CopyOnWriteArrayList();
 
+
+    Random random = new Random();
+
     public boolean gameOver = false;
 
     @Override
     public void paint(Graphics g) {
 
         if (!gameOver){
+
+
+
             background.draw(g);
             plane.draw(g);
 
@@ -113,23 +120,27 @@ public class GameFrame extends Frame {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }
+
+                    //随机生成敌机
+                GameFrame gameFrame = DataStore.get("gameFrame");
+                    if (random.nextInt(1000) > 980){
+                        gameFrame.enemyPlaneList.add(new EnemyPlane(
+                                random.nextInt(500)
+                                  ,random.nextInt(50),
+                                ImageMap.get("ep01")));
+                        }
+                    }
+
 
             }
 
         }.start();
 
         //游戏初始化时添加一些敌方飞机
-        Random x = new Random();
-        Random y = new Random();
-        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(500), ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(500), ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1000), ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1000), ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1500), ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1500), ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(2000), ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(2000), ImageMap.get("ep01")));
+        //Random x = new Random();
+        //Random y = new Random();
+        // enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1000), ImageMap.get("ep01")));
+        //enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1000), ImageMap.get("ep01")));
 
 
 
