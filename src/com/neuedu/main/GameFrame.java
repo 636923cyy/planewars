@@ -77,6 +77,8 @@ public class GameFrame extends Frame {
         //禁止启动窗口时有图片
         enableInputMethods(false);
 
+        setResizable(false);
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
