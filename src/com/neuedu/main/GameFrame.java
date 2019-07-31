@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameFrame extends Frame {
@@ -21,7 +22,7 @@ public class GameFrame extends Frame {
     private Plane plane = new Plane();
 
     //创建子弹集合
-    public final List<Bullet> bulletCopyOnWriteArrayList = new CopyOnWriteArrayList<>();
+    public final List<Bullet> bulletCopyOnWriteArrayList = new CopyOnWriteArrayList();
 
     //创建敌方子弹集合
     public  final List<EnemyBullet> enemyBulletList = new CopyOnWriteArrayList();
@@ -55,9 +56,9 @@ public class GameFrame extends Frame {
                 bullet.collisionTesting(enemyPlaneList);
             }
 
-            for (EnemyBullet enemyBullet : enemyBulletList) {
-                enemyBullet.collisionTesting(plane);
-            }
+            //for (EnemyBullet enemyBullet : enemyBulletList) {
+            //    enemyBullet.collisionTesting(plane);
+            //}
 
             //g.setColor(Color.RED);
             //g.drawString("" + enemyBulletList.size(),100,100);
@@ -119,10 +120,18 @@ public class GameFrame extends Frame {
         }.start();
 
         //游戏初始化时添加一些敌方飞机
-        enemyPlaneList.add(new EnemyPlane(50,30, ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(250,30, ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(400,30, ImageMap.get("ep01")));
-        enemyPlaneList.add(new EnemyPlane(600,30, ImageMap.get("ep01")));
+        Random x = new Random();
+        Random y = new Random();
+        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(500), ImageMap.get("ep01")));
+        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(500), ImageMap.get("ep01")));
+        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1000), ImageMap.get("ep01")));
+        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1000), ImageMap.get("ep01")));
+        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1500), ImageMap.get("ep01")));
+        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1500), ImageMap.get("ep01")));
+        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(2000), ImageMap.get("ep01")));
+        enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(2000), ImageMap.get("ep01")));
+
+
 
         setVisible(true);
 

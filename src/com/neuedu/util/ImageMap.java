@@ -10,7 +10,7 @@ public class ImageMap {
 
 
     static {
-        map.put("bg01",ImageUtil.getImage("com\\neuedu\\imgs\\bg\\bg1.png"));
+        map.put("bg01",ImageUtil.getImage("com\\neuedu\\imgs\\bg\\bg3.png"));
 
         map.put("my01",ImageUtil.getImage("com\\neuedu\\imgs\\plane\\my_1.png"));
 
