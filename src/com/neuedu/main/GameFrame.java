@@ -22,6 +22,12 @@ public class GameFrame extends Frame {
     //创建飞机对象
     private Plane plane = new Plane();
 
+    //创建Boss
+    private Boss boss = new Boss();
+
+    //创建Boss子弹集合
+    public final List<BossBullet> bossBulletList = new CopyOnWriteArrayList();
+
     //创建子弹集合
     public final List<Bullet> bulletCopyOnWriteArrayList = new CopyOnWriteArrayList();
 
@@ -49,6 +55,7 @@ public class GameFrame extends Frame {
 
             background.draw(g);
             plane.draw(g);
+            boss.draw(g);
 
             for (Bullet bullet : bulletCopyOnWriteArrayList) {
                 bullet.draw(g);
@@ -61,6 +68,10 @@ public class GameFrame extends Frame {
 
             for (EnemyPlane enemyPlane : enemyPlaneList) {
                 enemyPlane.draw(g);
+            }
+
+            for (BossBullet bossBullet : bossBulletList) {
+                bossBullet.draw(g);
             }
 
             for (Bullet bullet : bulletCopyOnWriteArrayList){
@@ -77,6 +88,10 @@ public class GameFrame extends Frame {
 
             for (EnemyBullet enemyBullet : enemyBulletList) {
                 enemyBullet.collisionTesting(plane);
+            }
+
+            for (BossBullet bossBullet : bossBulletList) {
+                bossBullet.collisionTesting(plane);
             }
 
             //g.setColor(Color.RED);
@@ -135,8 +150,8 @@ public class GameFrame extends Frame {
 
                     //随机生成敌机
                 GameFrame gameFrame = DataStore.get("gameFrame");
-                    if (random.nextInt(1000) > 980){
-                        gameFrame.enemyPlaneList.add(new EnemyPlane(random.nextInt(500),
+                    if (random.nextInt(1000) > 970){
+                        gameFrame.enemyPlaneList.add(new EnemyPlane(random.nextInt(700),
                                 random.nextInt(50), random.nextInt(2)+1));
                         }
 
@@ -146,14 +161,6 @@ public class GameFrame extends Frame {
             }
 
         }.start();
-
-        //游戏初始化时添加一些敌方飞机
-        //Random x = new Random();
-        //Random y = new Random();
-        // enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1000), ImageMap.get("ep01")));
-        //enemyPlaneList.add(new EnemyPlane(x.nextInt(531),-y.nextInt(1000), ImageMap.get("ep01")));
-
-
 
         setVisible(true);
 
