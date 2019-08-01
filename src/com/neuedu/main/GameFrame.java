@@ -36,6 +36,10 @@ public class GameFrame extends Frame {
 
     public boolean gameOver = false;
 
+    public  int score = 0;
+
+    public int hp = 100;
+
     @Override
     public void paint(Graphics g) {
 
@@ -63,9 +67,17 @@ public class GameFrame extends Frame {
                 bullet.collisionTesting(enemyPlaneList);
             }
 
-            //for (EnemyBullet enemyBullet : enemyBulletList) {
-            //    enemyBullet.collisionTesting(plane);
-            //}
+            g.setFont(new Font("楷体",Font.BOLD,25));
+            g.setColor(new Color(255,255,255));
+            g.drawString("得分：" + score, 50,80);
+
+            g.setFont(new Font("楷体",Font.BOLD,25));
+            g.setColor(new Color(255,255,255));
+            g.drawString("血量：" + hp, 50,110);
+
+            for (EnemyBullet enemyBullet : enemyBulletList) {
+                enemyBullet.collisionTesting(plane);
+            }
 
             //g.setColor(Color.RED);
             //g.drawString("" + enemyBulletList.size(),100,100);
@@ -124,11 +136,10 @@ public class GameFrame extends Frame {
                     //随机生成敌机
                 GameFrame gameFrame = DataStore.get("gameFrame");
                     if (random.nextInt(1000) > 980){
-                        gameFrame.enemyPlaneList.add(new EnemyPlane(
-                                random.nextInt(500)
-                                  ,random.nextInt(50),
-                                ImageMap.get("ep01")));
+                        gameFrame.enemyPlaneList.add(new EnemyPlane(random.nextInt(500),
+                                random.nextInt(50), random.nextInt(2)+1));
                         }
+
                     }
 
 
