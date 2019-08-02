@@ -26,7 +26,6 @@ public class ImageMap {
 
 
 
-
         map.put("boss1",ImageUtil.getImage("com\\neuedu\\imgs\\boss\\boss_A_01.png"));
         map.put("boss2",ImageUtil.getImage("com\\neuedu\\imgs\\boss\\boss_A_02.png"));
         map.put("boss3",ImageUtil.getImage("com\\neuedu\\imgs\\boss\\boss_A_03.png"));
@@ -36,7 +35,10 @@ public class ImageMap {
         map.put("boss7",ImageUtil.getImage("com\\neuedu\\imgs\\boss\\boss_A_07.png"));
         map.put("boss8",ImageUtil.getImage("com\\neuedu\\imgs\\boss\\boss_A_08.png"));
         map.put("boss9",ImageUtil.getImage("com\\neuedu\\imgs\\boss\\boss_A_09.png"));
-        map.put("boss0b",ImageUtil.getImage("com\\neuedu\\imgs\\boss\\bossb.png"));
+        map.put("boss0b",ImageUtil.getImage("com\\neuedu\\imgs\\boss\\bossbullet.png"));
+
+
+        map.put("ab01",ImageUtil.getImage("com\\neuedu\\imgs\\addblood\\addblood01.png"));
 
     }
 

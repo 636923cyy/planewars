@@ -19,7 +19,7 @@ public class Plane extends BaseSprite implements Moveable, Drawable {
 
     private boolean fire;
 
-    private int speed = FrameConstant.GAME_SPEED * 3;
+    private int speed = FrameConstant.GAME_SPEED * 9;
 
     public Plane(){
         this((FrameConstant.FRAME_WIDTH - ImageMap.get("my01").getWidth(null))/2,
@@ -34,8 +34,8 @@ public class Plane extends BaseSprite implements Moveable, Drawable {
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
         move();
+        g.drawImage(image, getX(), getY(), image.getWidth(null), image.getHeight(null), null);
         //fire();
     }
 
@@ -127,4 +127,5 @@ public class Plane extends BaseSprite implements Moveable, Drawable {
     public Rectangle getRectangle() {
         return new Rectangle(getX(),getY(),image.getWidth(null),image.getHeight(null));
     }
+
 }

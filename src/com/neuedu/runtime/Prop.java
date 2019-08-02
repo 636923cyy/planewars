@@ -9,17 +9,21 @@ import com.neuedu.util.DataStore;
 import com.neuedu.util.ImageMap;
 
 import java.awt.*;
+import java.util.Random;
 
-public class BossBullet extends BaseSprite implements Moveable, Drawable {
+public class Prop extends BaseSprite implements Moveable, Drawable {
 
     private Image image;
-    private int speed = FrameConstant.GAME_SPEED * 5;
 
-    public BossBullet() {
-        this(0,0, ImageMap.get("boss0b"));
+    private int speed = FrameConstant.GAME_SPEED * 3;
+
+    private Random random = new Random();
+
+    public Prop() {
+        this(0,0, ImageMap.get("ab01"));
     }
 
-    public BossBullet(int x, int y, Image image) {
+    public Prop(int x, int y, Image image) {
         super(x, y);
         this.image = image;
     }
@@ -28,39 +32,40 @@ public class BossBullet extends BaseSprite implements Moveable, Drawable {
     public void draw(Graphics g) {
         move();
         g.drawImage(image,getX(),getY(),image.getWidth(null),image.getHeight(null),null);
+
     }
 
     @Override
     public void move() {
         borderTesting();
         setY(getY() + speed);
+
     }
 
     public void borderTesting(){
         if (getY() > FrameConstant.FRAME_HEIGHT){
-            GameFrame gameFrame = DataStore.get("gameFrame");
-            gameFrame.bossBulletList.remove(this);
+            GameFrame gameFrame = new DataStore().get("gameFrame");
+            gameFrame.propList.remove(this);
         }
     }
+
 
     @Override
     public Rectangle getRectangle() {
         return new Rectangle(getX(),getY(),image.getWidth(null),image.getHeight(null));
     }
 
-
     //碰撞检测
     public void collisionTesting(Plane plane){
         GameFrame gameFrame = DataStore.get("gameFrame");
         if (plane.getRectangle().intersects(this.getRectangle())) {
-            gameFrame.bossBulletList.remove(this);
-            if(gameFrame.hp > 0){
-                gameFrame.hp -= 10;
-                if (gameFrame.hp == 0){
-                    gameFrame.gameOver = true;
-                }
+            gameFrame.propList.remove(this);
+            gameFrame.hp += 20;
+            if (gameFrame.hp <= 0){
+                gameFrame.gameOver = true;
             }
         }
 
     }
+
 }

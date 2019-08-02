@@ -58,9 +58,19 @@ public class Bullet extends BaseSprite implements Moveable, Drawable {
                 gameFrame.bulletCopyOnWriteArrayList.remove(this);
                 gameFrame.score += enemyPlane.getType();
                 gameFrame.hp++;
-
             }
         }
+    }
+
+    public void collisionTesting(Boss boss){
+        GameFrame gameFrame = DataStore.get("gameFrame");
+        if (boss.getRectangle().intersects(this.getRectangle())) {
+            gameFrame.bulletCopyOnWriteArrayList.remove(this);
+            if(gameFrame.bosshp >= 0){
+                gameFrame.bosshp --;
+            }
+        }
+
     }
 
 }

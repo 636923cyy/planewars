@@ -37,6 +37,9 @@ public class GameFrame extends Frame {
     //创建敌方飞机集合
     public final List<EnemyPlane> enemyPlaneList = new CopyOnWriteArrayList();
 
+    //创建道具集合
+    public final List<Prop> propList = new CopyOnWriteArrayList();
+
 
     Random random = new Random();
 
@@ -45,6 +48,8 @@ public class GameFrame extends Frame {
     public  int score = 0;
 
     public int hp = 100;
+
+    public int bosshp = 100;
 
     @Override
     public void paint(Graphics g) {
@@ -74,17 +79,19 @@ public class GameFrame extends Frame {
                 bossBullet.draw(g);
             }
 
+            for (Prop prop : propList) {
+                prop.draw(g);
+            }
+
+
+
             for (Bullet bullet : bulletCopyOnWriteArrayList){
                 bullet.collisionTesting(enemyPlaneList);
             }
+            for (Bullet bullet : bulletCopyOnWriteArrayList){
+                bullet.collisionTesting(boss);
+            }
 
-            g.setFont(new Font("楷体",Font.BOLD,25));
-            g.setColor(new Color(255,255,255));
-            g.drawString("得分：" + score, 50,80);
-
-            g.setFont(new Font("楷体",Font.BOLD,25));
-            g.setColor(new Color(255,255,255));
-            g.drawString("血量：" + hp, 50,110);
 
             for (EnemyBullet enemyBullet : enemyBulletList) {
                 enemyBullet.collisionTesting(plane);
@@ -92,6 +99,41 @@ public class GameFrame extends Frame {
 
             for (BossBullet bossBullet : bossBulletList) {
                 bossBullet.collisionTesting(plane);
+            }
+
+            for (Prop prop : propList) {
+                prop.collisionTesting(plane);
+            }
+
+            boss.collisionTesting(plane);
+
+
+
+            g.setFont(new Font("楷体",Font.BOLD,25));
+            g.setColor(new Color(255,255,255));
+            g.drawString("得分：" + score, 50,80);
+
+            g.setFont(new Font("楷体",Font.BOLD,25));
+            g.setColor(new Color(255,255,255));
+            g.drawString("BOSS血量：" + bosshp, 50,120);
+
+            g.setFont(new Font("楷体",Font.BOLD,25));
+            g.setColor(new Color(255,255,255));
+            g.drawString("血量：" + hp, 50,160);
+
+
+            if (hp <= 0){
+                g.setFont(new Font("楷体",Font.BOLD,80));
+                g.setColor(new Color(0, 0,0));
+                g.drawString("游戏结束" , 250,450);
+                g.drawString("LOSE" , 320,550);
+            }
+
+            if (bosshp <= 0){
+                g.setFont(new Font("楷体",Font.BOLD,80));
+                g.setColor(new Color(0, 0, 0));
+                g.drawString("游戏结束" , 220,450);
+                g.drawString("YOU ARE WINER !" , 75,550);
             }
 
             //g.setColor(Color.RED);
@@ -150,13 +192,19 @@ public class GameFrame extends Frame {
 
                     //随机生成敌机
                 GameFrame gameFrame = DataStore.get("gameFrame");
-                    if (random.nextInt(1000) > 970){
+                    if (random.nextInt(1000) > 975){
                         gameFrame.enemyPlaneList.add(new EnemyPlane(random.nextInt(700),
-                                random.nextInt(50), random.nextInt(2)+1));
+                                random.nextInt(40), random.nextInt(2)+1));
                         }
 
+
+                        //随机生成加血道具
+                    if (random.nextInt(1000) > 975){
+                        gameFrame.propList.add(new Prop(random.nextInt(700),
+                                random.nextInt(40),ImageMap.get("ab01")));
                     }
 
+                    }
 
             }
 

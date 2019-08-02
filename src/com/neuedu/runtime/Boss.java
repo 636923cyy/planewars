@@ -12,7 +12,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 
 public class Boss extends BaseSprite implements Moveable, Drawable {
 
@@ -23,7 +23,10 @@ public class Boss extends BaseSprite implements Moveable, Drawable {
 
     Random random = new Random();
 
-    private int speed = FrameConstant.GAME_SPEED * 3;
+    private boolean right = true;
+    private boolean top = true;
+
+    private int speed = FrameConstant.GAME_SPEED * 2;
 
     public Boss() {
 
@@ -42,22 +45,25 @@ public class Boss extends BaseSprite implements Moveable, Drawable {
     public void draw(Graphics g) {
         move();
         fire();
-        g.drawImage(imageList.get(index++ / 2),100,100,imageList.get(0).getWidth(null),
-                imageList.get(0).getHeight(null),null);
-        if (index >= 18){
-            index = 0;
-        }
+
+        g.drawImage(imageList.get(index++ / 2),getX(),getY(),imageList.get(0).getWidth(null),
+          imageList.get(0).getHeight(null),null);
+            if (index >= 18){
+                index = 0;
+            }
 
     }
 
 
+    public  double angle;
     public void fire(){
+        angle +=Math.PI / 4;
         GameFrame gameFrame = DataStore.get("gameFrame");
-        if (random.nextInt(1000) > 975){
-            gameFrame.bossBulletList.add(new BossBullet(getX() + (imageList.get(0).getWidth(null)/2) - (ImageMap.get("boss0b").getWidth(null)/2),
-                    getY() + imageList.get(0).getHeight(null),
+        if (random.nextInt(1000) > 980){
+            gameFrame.bossBulletList.add(new BossBullet(
+                    getX() + imageList.get(0).getWidth(null)/ 2 + 30 +(int)Math.cos(angle),
+                    getY() + imageList.get(0).getHeight(null) / 2 + 30 +(int)Math.sin(angle),
                     ImageMap.get("boss0b")));
-
         }
     }
 
@@ -66,11 +72,28 @@ public class Boss extends BaseSprite implements Moveable, Drawable {
     @Override
     public void move() {
         borderTesting();
+        if (right) {
+            setX(getX() + speed);
+            setY(getY() + speed);
+        }else {
+            setX(getX() - speed);
+            setY(getY() - speed);
+        }
 
     }
 
 
     public void borderTesting(){
+        if (getX() + imageList.get(0).getWidth(null) >= FrameConstant.FRAME_WIDTH){
+            right = false;
+        }else if (getX() < 0){
+            right = true;
+        }
+        //if (getY() + imageList.get(0).getHeight(null) >= FrameConstant.FRAME_HEIGHT){
+        //    top = false;
+        //}else if (getY() < 0){
+        //    top = true;
+        //}
 
     }
 
@@ -80,5 +103,17 @@ public class Boss extends BaseSprite implements Moveable, Drawable {
     }
 
 
+    public void collisionTesting(Plane plane){
+        GameFrame gameFrame = DataStore.get("gameFrame");
+        if (plane.getRectangle().intersects(this.getRectangle())) {
+            if(gameFrame.hp > 0){
+                gameFrame.hp -= 10;
+                if (gameFrame.hp == 0){
+                    gameFrame.gameOver = true;
+                }
+            }
+        }
+
+    }
 
 }
