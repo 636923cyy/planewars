@@ -65,8 +65,9 @@ public class Bullet extends BaseSprite implements Moveable, Drawable {
     public void collisionTesting(Boss boss){
         GameFrame gameFrame = DataStore.get("gameFrame");
         if (boss.getRectangle().intersects(this.getRectangle())) {
-            gameFrame.bulletCopyOnWriteArrayList.remove(this);
-            if(gameFrame.bosshp >= 0){
+
+            if(gameFrame.bosshp >= 0 && gameFrame.score >= 20){
+                gameFrame.bulletCopyOnWriteArrayList.remove(this);
                 gameFrame.bosshp --;
             }
         }

@@ -60,7 +60,7 @@ public class Prop extends BaseSprite implements Moveable, Drawable {
         GameFrame gameFrame = DataStore.get("gameFrame");
         if (plane.getRectangle().intersects(this.getRectangle())) {
             gameFrame.propList.remove(this);
-            gameFrame.hp += 20;
+            gameFrame.hp += 10;
             if (gameFrame.hp <= 0){
                 gameFrame.gameOver = true;
             }

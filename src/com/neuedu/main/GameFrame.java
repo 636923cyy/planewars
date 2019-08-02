@@ -60,7 +60,11 @@ public class GameFrame extends Frame {
 
             background.draw(g);
             plane.draw(g);
-            boss.draw(g);
+            //boss.draw(g);
+
+            if (score >= 20){
+                boss.draw(g);
+            }
 
             for (Bullet bullet : bulletCopyOnWriteArrayList) {
                 bullet.draw(g);
@@ -88,9 +92,14 @@ public class GameFrame extends Frame {
             for (Bullet bullet : bulletCopyOnWriteArrayList){
                 bullet.collisionTesting(enemyPlaneList);
             }
+
+
+
             for (Bullet bullet : bulletCopyOnWriteArrayList){
                 bullet.collisionTesting(boss);
+
             }
+
 
 
             for (EnemyBullet enemyBullet : enemyBulletList) {
@@ -123,6 +132,8 @@ public class GameFrame extends Frame {
 
 
             if (hp <= 0){
+                hp = 0;
+                gameOver = true;
                 g.setFont(new Font("楷体",Font.BOLD,80));
                 g.setColor(new Color(0, 0,0));
                 g.drawString("游戏结束" , 250,450);
@@ -130,10 +141,13 @@ public class GameFrame extends Frame {
             }
 
             if (bosshp <= 0){
+
+                gameOver = true;
                 g.setFont(new Font("楷体",Font.BOLD,80));
                 g.setColor(new Color(0, 0, 0));
-                g.drawString("游戏结束" , 220,450);
+                g.drawString("游戏胜利" , 220,450);
                 g.drawString("YOU ARE WINER !" , 75,550);
+
             }
 
             //g.setColor(Color.RED);
@@ -199,7 +213,7 @@ public class GameFrame extends Frame {
 
 
                         //随机生成加血道具
-                    if (random.nextInt(1000) > 975){
+                    if (random.nextInt(1000) > 985){
                         gameFrame.propList.add(new Prop(random.nextInt(700),
                                 random.nextInt(40),ImageMap.get("ab01")));
                     }
